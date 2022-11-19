@@ -1,7 +1,7 @@
 const places = [
   {
     _id: '1',
-    name: 'Paris',
+    name: 'Paris, France',
     image: '/images/Paris.jpg',
     description:
       'Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working',
@@ -21,7 +21,7 @@ const places = [
   },
   {
     _id: '3',
-    name: 'Seoul',
+    name: 'Seoul, China',
     image: '/images/seoul.jpg',
     description:
       'Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design',
@@ -41,8 +41,8 @@ const places = [
   },
   {
     _id: '5',
-    name: 'New York',
-    image: '/images/New York.jpg',
+    name: 'New York, USA',
+    image: '/images/NewYork.jpg',
     description:
       'Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience',
     brand: 'Logitech',
@@ -61,7 +61,17 @@ const places = [
   },
   {
     _id: '7',
-    name: 'Jerusalem',
+    name: 'Jerusalem, Isreal',
+    image: '/images/Jerusalem.jpg',
+    description:
+      'Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',
+    brand: 'Amazon',
+    price: 99.99,
+    seatLeft: 0,
+  },
+  {
+    _id: '8',
+    name: 'Jerusalem, Isreal',
     image: '/images/Jerusalem.jpg',
     description:
       'Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',
@@ -71,4 +81,4 @@ const places = [
   },
 ];
 
-export default places;
+module.exports = places;

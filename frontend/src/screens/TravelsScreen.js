@@ -1,7 +1,6 @@
-import React from 'react';
-// import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -10,17 +9,21 @@ import {
   Card,
   Button,
   ListGroupItem,
-  Form,
-  FormGroup,
-  FormLabel,
-  FormControl,
 } from 'react-bootstrap';
-import places from '../places';
+import axios from 'axios';
 
 const TravelsScreen = () => {
   const { id } = useParams();
-  const place = places.find((p) => p._id === id);
-  let navigate = useNavigate();
+  const [place, setPlace] = useState({});
+
+  useEffect(() => {
+    const fetchPlace = async () => {
+      const { data } = await axios.get(`/api/places/${id}`);
+
+      setPlace(data);
+    };
+    fetchPlace();
+  });
 
   //   const dispatch = useDispatch();
 

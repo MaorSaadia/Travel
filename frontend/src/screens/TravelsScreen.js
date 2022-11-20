@@ -37,7 +37,7 @@ const TravelsScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/">
+      <Link className="btn btn-info my-3" to="/">
         Go Back
       </Link>
 
@@ -107,19 +107,7 @@ const TravelsScreen = () => {
                     variant="outline-info"
                     disabled={place.seatLeft === 0}
                   >
-                    Add To Cart
-                  </Button>
-                </div>
-              </ListGroupItem>
-
-              <ListGroupItem>
-                <div className="d-grid gap-2">
-                  <Button
-                    // onClick={addToCartHandler}
-                    variant="outline-info"
-                    disabled={place.countInStock === 0}
-                  >
-                    Go To Cart
+                    <i className="fa-solid fa-ticket"></i> Buy Ticket
                   </Button>
                 </div>
               </ListGroupItem>

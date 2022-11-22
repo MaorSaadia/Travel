@@ -9,12 +9,14 @@ import {
   Card,
   Button,
   ListGroupItem,
+  Form,
 } from 'react-bootstrap';
 import axios from 'axios';
 
 const TravelsScreen = () => {
   const { id } = useParams();
   const [place, setPlace] = useState({});
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
     const fetchPlace = async () => {
@@ -55,6 +57,15 @@ const TravelsScreen = () => {
               <strong>Price:</strong> ${place.price}
             </ListGroupItem>
             <ListGroupItem>
+              <strong>Origin Country:</strong> {place.originCountry}
+            </ListGroupItem>
+            <ListGroupItem>
+              <strong>Flight Date:</strong> {place.flightDate}
+            </ListGroupItem>
+            <ListGroupItem>
+              <strong>Type:</strong> {place.type}
+            </ListGroupItem>
+            <ListGroupItem>
               <strong>Description:</strong> {place.description}
             </ListGroupItem>
           </ListGroup>
@@ -74,7 +85,7 @@ const TravelsScreen = () => {
               <ListGroupItem>
                 <Row>
                   <Col>Status:</Col>
-                  <Col>{place.seatLeft > 0 ? 'Availbale' : 'Out of Stock'}</Col>
+                  <Col>{place.numberOfSeat > 0 ? 'Availbale' : 'Sold Out'}</Col>
                 </Row>
               </ListGroupItem>
 
@@ -89,7 +100,7 @@ const TravelsScreen = () => {
                         value={qty}
                         onChange={(e) => setQty(e.target.value)}
                       >
-                        {[...Array(places.countInStock).keys()].map((x) => (
+                        {[...Array(places.numberOfSeat).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>
                             {x + 1}
                           </option>
@@ -100,12 +111,30 @@ const TravelsScreen = () => {
                 </ListGroupItem>
               )} */}
 
+              {/* <ListGroupItem>
+                <Row>
+                  <Col>Date: </Col>
+                  <Form.Control
+                    size="sm"
+                    as="select"
+                    value={qty}
+                    onChange={(e) => setQty(e.target.value)}
+                  >
+                    {[...Array(place.numberOfSeat).keys()].map((x) => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Row>
+              </ListGroupItem> */}
+
               <ListGroupItem>
                 <div className="d-grid gap-2">
                   <Button
                     // onClick={addplaceToCar}
                     variant="outline-info"
-                    disabled={place.seatLeft === 0}
+                    disabled={place.numberOfSeat === 0}
                   >
                     <i className="fa-solid fa-ticket"></i> Buy Ticket
                   </Button>

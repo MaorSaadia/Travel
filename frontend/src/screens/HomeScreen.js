@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Places from '../components/Places';
-import axios from 'axios';
+import { listPlaces } from '../actions/placeActions';
 
 const HomeScreen = () => {
-  const [places, setPlaces] = useState([]);
+  const dispatch = useDispatch();
+
+  const placeList = useSelector((state) => state.placeList);
+  const { loading, error, places } = placeList;
 
   useEffect(() => {
-    const fetchPlaces = async () => {
-      const { data } = await axios.get('/api/places');
-
-      setPlaces(data);
-    };
-    fetchPlaces();
-  });
+    dispatch(listPlaces());
+  }, [dispatch]);
 
   return (
     <>
       <h1>Hot Places</h1>
-      <Row>
-        {places.map((place) => (
-          <Col key={place._id} sm={12} md={6} lg={4} xl={4}>
-            <Places places={place} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <h3>{error}</h3>
+      ) : (
+        <Row>
+          {places.map((place) => (
+            <Col key={place._id} sm={12} md={6} lg={4} xl={4}>
+              <Places places={place} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { React, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import {
   Row,
@@ -9,25 +9,21 @@ import {
   Card,
   Button,
   ListGroupItem,
-  Form,
 } from 'react-bootstrap';
-import axios from 'axios';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { listDetailsPlace } from '../actions/placeActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
-  const [place, setPlace] = useState({});
-  const [qty, setQty] = useState(1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchPlace = async () => {
-      const { data } = await axios.get(`/api/places/${id}`);
+    dispatch(listDetailsPlace(id));
+  }, [dispatch, id]);
 
-      setPlace(data);
-    };
-    fetchPlace();
-  });
-
-  //   const dispatch = useDispatch();
+  const placeDetails = useSelector((state) => state.placeDetails);
+  const { loading, error, place } = placeDetails;
 
   //   const userLogin = useSelector((state) => state.userLogin);
   //   const { userInfo } = userLogin;
@@ -43,53 +39,60 @@ const TravelsScreen = () => {
         Go Back
       </Link>
 
-      <Row>
-        <Col md={5}>
-          <Image src={place.image} alt={place.name} fluid />
-        </Col>
-        <Col md={4}>
-          <ListGroup variant="flush">
-            <ListGroupItem>
-              <h3>{place.name}</h3>
-            </ListGroupItem>
-
-            <ListGroupItem>
-              <strong>Price:</strong> ${place.price}
-            </ListGroupItem>
-            <ListGroupItem>
-              <strong>Origin Country:</strong> {place.originCountry}
-            </ListGroupItem>
-            <ListGroupItem>
-              <strong>Flight Date:</strong> {place.flightDate}
-            </ListGroupItem>
-            <ListGroupItem>
-              <strong>Type:</strong> {place.type}
-            </ListGroupItem>
-            <ListGroupItem>
-              <strong>Description:</strong> {place.description}
-            </ListGroupItem>
-          </ListGroup>
-        </Col>
-        <Col md={3}>
-          <Card>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger"> {error}</Message>
+      ) : (
+        <Row>
+          <Col md={5}>
+            <Image src={place.image} alt={place.name} fluid />
+          </Col>
+          <Col md={4}>
             <ListGroup variant="flush">
               <ListGroupItem>
-                <Row>
-                  <Col>Price:</Col>
-                  <Col>
-                    <strong>${place.price}</strong>
-                  </Col>
-                </Row>
+                <h3>{place.name}</h3>
               </ListGroupItem>
 
               <ListGroupItem>
-                <Row>
-                  <Col>Status:</Col>
-                  <Col>{place.numberOfSeat > 0 ? 'Availbale' : 'Sold Out'}</Col>
-                </Row>
+                <strong>Price:</strong> ${place.price}
               </ListGroupItem>
+              <ListGroupItem>
+                <strong>Origin Country:</strong> {place.originCountry}
+              </ListGroupItem>
+              <ListGroupItem>
+                <strong>Flight Date:</strong> {place.flightDate}
+              </ListGroupItem>
+              <ListGroupItem>
+                <strong>Type:</strong> {place.type}
+              </ListGroupItem>
+              <ListGroupItem>
+                <strong>Description:</strong> {place.description}
+              </ListGroupItem>
+            </ListGroup>
+          </Col>
+          <Col md={3}>
+            <Card>
+              <ListGroup variant="flush">
+                <ListGroupItem>
+                  <Row>
+                    <Col>Price:</Col>
+                    <Col>
+                      <strong>${place.price}</strong>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
 
-              {/* {places.countInStock > 0 && (
+                <ListGroupItem>
+                  <Row>
+                    <Col>Status:</Col>
+                    <Col>
+                      {place.numberOfSeat > 0 ? 'Availbale' : 'Sold Out'}
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+
+                {/* {places.countInStock > 0 && (
                 <ListGroupItem>
                   <Row>
                     <Col>Qty:</Col>
@@ -111,7 +114,7 @@ const TravelsScreen = () => {
                 </ListGroupItem>
               )} */}
 
-              {/* <ListGroupItem>
+                {/* <ListGroupItem>
                 <Row>
                   <Col>Date: </Col>
                   <Form.Control
@@ -129,21 +132,22 @@ const TravelsScreen = () => {
                 </Row>
               </ListGroupItem> */}
 
-              <ListGroupItem>
-                <div className="d-grid gap-2">
-                  <Button
-                    // onClick={addplaceToCar}
-                    variant="outline-info"
-                    disabled={place.numberOfSeat === 0}
-                  >
-                    <i className="fa-solid fa-ticket"></i> Buy Ticket
-                  </Button>
-                </div>
-              </ListGroupItem>
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+                <ListGroupItem>
+                  <div className="d-grid gap-2">
+                    <Button
+                      // onClick={addplaceToCar}
+                      variant="outline-info"
+                      disabled={place.numberOfSeat === 0}
+                    >
+                      <i className="fa-solid fa-ticket"></i> Buy Ticket
+                    </Button>
+                  </div>
+                </ListGroupItem>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };

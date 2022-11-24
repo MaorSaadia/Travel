@@ -2,10 +2,11 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { placeListReducer } from './reducers/placeReducer';
+import { placeListReducer, placeDetailsReducer } from './reducers/placeReducer';
 
 const reducer = combineReducers({
   placeList: placeListReducer,
+  placeDetails: placeDetailsReducer,
 });
 
 const intialState = {};

@@ -5,6 +5,7 @@ import { NotFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './data/config/db.js';
 
 import placeRoutes from './routes/placeRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -12,11 +13,14 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
 app.use('/api/places', placeRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(NotFound);
 

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Places from '../components/Places';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import { listPlaces } from '../actions/placeActions';
 
 const HomeScreen = () => {
@@ -16,11 +18,11 @@ const HomeScreen = () => {
 
   return (
     <>
-      <h1>Hot Places</h1>
+      <h1 className="fancy">Hot Places</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : error ? (
-        <h3>{error}</h3>
+        <Message variant="danger">{error}</Message>
       ) : (
         <Row>
           {places.map((place) => (

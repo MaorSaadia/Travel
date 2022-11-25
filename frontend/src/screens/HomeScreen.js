@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import Places from '../components/Places';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 import { listPlaces } from '../actions/placeActions';
 
 const HomeScreen = () => {
@@ -18,6 +19,8 @@ const HomeScreen = () => {
 
   return (
     <>
+      <Meta title={'Travel+ | Home'} />
+
       <h1 className="fancy">Hot Places</h1>
       {loading ? (
         <Loader />

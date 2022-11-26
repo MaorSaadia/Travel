@@ -3,13 +3,20 @@ import { combineReducers } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { placeListReducer, placeDetailsReducer } from './reducers/placeReducer';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducer';
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userUpadateProfileReducer,
+} from './reducers/userReducer';
 
 const reducer = combineReducers({
   placeList: placeListReducer,
   placeDetails: placeDetailsReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpadateProfile: userUpadateProfileReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

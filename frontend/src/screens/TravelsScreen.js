@@ -71,7 +71,7 @@ const TravelsScreen = () => {
               </ListGroupItem>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col md={2}>
             <Card>
               <ListGroup variant="flush">
                 <ListGroupItem>
@@ -135,7 +135,6 @@ const TravelsScreen = () => {
                 <ListGroupItem>
                   <div className="d-grid gap-2">
                     <Button
-                      // onClick={addplaceToCar}
                       variant="outline-info"
                       disabled={place.numberOfSeat === 0}
                     >

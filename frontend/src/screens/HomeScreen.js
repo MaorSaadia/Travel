@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, ListGroup, ListGroupItem, Card } from 'react-bootstrap';
-import Select from 'react-select';
 import Places from '../components/Places';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -18,18 +17,22 @@ const HomeScreen = () => {
     dispatch(listPlaces());
   }, [dispatch]);
 
-  const options = [
-    { value: 'Price Low-High', label: 'Price Low-High' },
-    { value: 'Price High-Low', label: 'Price High-Low' },
-    { value: 'Most Popular', label: 'Most Popular' },
-    { value: 'Country', label: 'Country' },
-  ];
+  const [sortState, setSortState] = useState('none');
+  const sortMethods = {
+    none: { method: (a, b) => null },
+    PriceLowHigh: { method: (a, b) => (a.price < b.price ? -1 : 1) },
+    PriceHighLow: { method: (a, b) => (a.price > b.price ? -1 : 1) },
+    MostPopular: { method: (a, b) => (a._id < b._id ? -1 : 1) },
+    Country: {
+      method: (a, b) => (a.name.split(',')[1] < b.name.split(',')[1] ? -1 : 1),
+    },
+  };
 
   return (
     <>
       <Meta title={'Travel+ | Home'} />
 
-      <h1 className="fancy">Hot Places</h1>
+      {/* <h1 className="fancy">Hot Places</h1> */}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -37,21 +40,25 @@ const HomeScreen = () => {
       ) : (
         <Row>
           <Row className="justify-content-md-center">
-            <Card style={{ width: '36rem' }}>
+            <Card border="info" style={{ width: '16rem' }}>
               <ListGroup variant="flush">
                 <ListGroupItem>
-                  <h5 className="orderby"> Order By:</h5>
-                  <Select
-                    className="basic-single"
-                    defaultValue={options[2]}
-                    options={options}
-                  />
+                  <h5 className="sortby">Sort By:</h5>
+                  <select
+                    style={{ width: '13rem' }}
+                    onChange={(e) => setSortState(e.target.value)}
+                  >
+                    <option value="MostPopular">Most Popular</option>
+                    <option value="PriceLowHigh">Price Low-High</option>
+                    <option value="PriceHighLow">Price High-Low</option>
+                    <option value="Country">Country</option>
+                  </select>
                 </ListGroupItem>
               </ListGroup>
             </Card>
           </Row>
 
-          {places.map((place) => (
+          {places.sort(sortMethods[sortState].method).map((place) => (
             <Col key={place._id} sm={12} md={6} lg={4} xl={4}>
               <Places places={place} />
             </Col>

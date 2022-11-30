@@ -16,7 +16,13 @@ h3 {
   padding: 1rem 0;
 }
 
-.orderby {
+.sortby {
   text-align: center;
   color: RoyalBlue;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
 }

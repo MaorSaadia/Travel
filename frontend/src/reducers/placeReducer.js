@@ -2,9 +2,16 @@ import {
   PLACE_LIST_FAIL,
   PLACE_LIST_REQUEST,
   PLACE_LIST_SUCCESS,
-  PRODUCT_DETAILS_FAIL,
-  PRODUCT_DETAILS_REQUEST,
-  PRODUCT_DETAILS_SUCCESS,
+  PLACE_DETAILS_FAIL,
+  PLACE_DETAILS_REQUEST,
+  PLACE_DETAILS_SUCCESS,
+  PLACE_DELETE_REQUEST,
+  PLACE_DELETE_SUCCESS,
+  PLACE_DELETE_FAIL,
+  PLACE_CREATE_REQUEST,
+  PLACE_CREATE_SUCCESS,
+  PLACE_CREATE_FAIL,
+  PLACE_CREATE_RESET,
 } from '../constants/placeConstants';
 
 export const placeListReducer = (state = { places: [] }, action) => {
@@ -25,13 +32,56 @@ export const placeListReducer = (state = { places: [] }, action) => {
 
 export const placeDetailsReducer = (state = { place: {} }, action) => {
   switch (action.type) {
-    case PRODUCT_DETAILS_REQUEST:
+    case PLACE_DETAILS_REQUEST:
       return { loading: true, ...state };
-    case PRODUCT_DETAILS_SUCCESS:
+    case PLACE_DETAILS_SUCCESS:
       return { loading: false, place: action.payload };
-    case PRODUCT_DETAILS_FAIL:
+    case PLACE_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
+
+export const placeDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PLACE_DELETE_REQUEST:
+      return { loading: true };
+    case PLACE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case PLACE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const placeCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PLACE_CREATE_REQUEST:
+      return { loading: true };
+    case PLACE_CREATE_SUCCESS:
+      return { loading: false, success: true, place: action.payload };
+    case PLACE_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PLACE_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// export const productUpdateReducer = (state = { product: {} }, action) => {
+//   switch (action.type) {
+//     case PRODUCT_UPDATE_REQUEST:
+//       return { loading: true };
+//     case PRODUCT_UPDATE_SUCCESS:
+//       return { loading: false, success: true, product: action.payload };
+//     case PRODUCT_UPDATE_FAIL:
+//       return { loading: false, error: action.payload };
+//     case PRODUCT_UPDATE_RESET:
+//       return { product: {} };
+//     default:
+//       return state;
+//   }
+// };

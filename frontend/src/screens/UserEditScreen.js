@@ -44,14 +44,13 @@ const UserEditScreen = () => {
       } else {
         setName(user.name);
         setEmail(user.email);
-        setIsAdmin(user.isAdmin);
       }
     }
   }, [dispatch, user, id, successUpdate, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUsers({ _id: id, name, email, isAdmin }));
+    dispatch(updateUsers({ _id: id, name, email }));
   };
 
   return (

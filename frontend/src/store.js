@@ -2,7 +2,12 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { placeListReducer, placeDetailsReducer } from './reducers/placeReducer';
+import {
+  placeListReducer,
+  placeDetailsReducer,
+  placeDeleteReducer,
+  placeCreateReducer,
+} from './reducers/placeReducer';
 import {
   userLoginReducer,
   userRegisterReducer,
@@ -16,6 +21,8 @@ import {
 const reducer = combineReducers({
   placeList: placeListReducer,
   placeDetails: placeDetailsReducer,
+  placeDelete: placeDeleteReducer,
+  placeCreate: placeCreateReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,

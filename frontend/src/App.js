@@ -10,6 +10,8 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
+import PlaceListScreen from './screens/PlaceListScreen';
+import PlaceEditScreen from './screens/PlaceEditScreen';
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+            <Route path="/admin/place/:id/edit" element={<PlaceEditScreen />} />
+            <Route path="/admin/placelist" element={<PlaceListScreen />} />
           </Routes>
         </Container>
       </main>

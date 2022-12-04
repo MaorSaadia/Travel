@@ -1,6 +1,6 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -9,6 +9,7 @@ import {
   Card,
   Button,
   ListGroupItem,
+  Form,
 } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -16,11 +17,31 @@ import { listDetailsPlace } from '../actions/placeActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
+  const [qty, setQty] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const addDays = () => {
+  //   const date = new Date();
+  //   let datesCollection = [];
+
+  //   for (var i = 1; i < 90; i += 5) {
+  //     const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
+  //     datesCollection.push(
+  //       `${newDate.getDate()}/${
+  //         newDate.getMonth() + 1
+  //       }/${newDate.getFullYear()}`
+  //     );
+  //   }
+
+  //   return datesCollection;
+  // };
 
   useEffect(() => {
     dispatch(listDetailsPlace(id));
   }, [dispatch, id]);
+
+  // console.log(addDays());
 
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
@@ -28,10 +49,9 @@ const TravelsScreen = () => {
   //   const userLogin = useSelector((state) => state.userLogin);
   //   const { userInfo } = userLogin;
 
-  //   const addProductToCar = () => {
-  //     dispatch(addToCart(id, qty));
-  //     window.alert('The Product Added To Your Cart');
-  //   };
+  const submitHandler = () => {
+    navigate(`/payment/${id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -61,9 +81,6 @@ const TravelsScreen = () => {
                 <strong>Origin Country:</strong> {place.originCountry}
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Flight Date:</strong> {place.flightDate}
-              </ListGroupItem>
-              <ListGroupItem>
                 <strong>Type:</strong> {place.type}
               </ListGroupItem>
               <ListGroupItem>
@@ -71,7 +88,7 @@ const TravelsScreen = () => {
               </ListGroupItem>
             </ListGroup>
           </Col>
-          <Col md={2}>
+          <Col md={3}>
             <Card>
               <ListGroup variant="flush">
                 <ListGroupItem>
@@ -92,49 +109,32 @@ const TravelsScreen = () => {
                   </Row>
                 </ListGroupItem>
 
-                {/* {places.countInStock > 0 && (
-                <ListGroupItem>
-                  <Row>
-                    <Col>Qty:</Col>
-                    <Col>
-                      <Form.Control
-                        size="sm"
-                        as="select"
-                        value={qty}
-                        onChange={(e) => setQty(e.target.value)}
-                      >
-                        {[...Array(places.numberOfSeat).keys()].map((x) => (
-                          <option key={x + 1} value={x + 1}>
-                            {x + 1}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Col>
-                  </Row>
-                </ListGroupItem>
-              )} */}
-
-                {/* <ListGroupItem>
-                <Row>
-                  <Col>Date: </Col>
-                  <Form.Control
-                    size="sm"
-                    as="select"
-                    value={qty}
-                    onChange={(e) => setQty(e.target.value)}
-                  >
-                    {[...Array(place.numberOfSeat).keys()].map((x) => (
-                      <option key={x + 1} value={x + 1}>
-                        {x + 1}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Row>
-              </ListGroupItem> */}
+                {place.numberOfSeat > 0 && (
+                  <ListGroupItem>
+                    <Row>
+                      <Col>How Many Ticket:</Col>
+                      <Col>
+                        <Form.Control
+                          size="sm"
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(6).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
+                )}
 
                 <ListGroupItem>
                   <div className="d-grid gap-2">
                     <Button
+                      onClick={submitHandler}
                       variant="outline-info"
                       disabled={place.numberOfSeat === 0}
                     >

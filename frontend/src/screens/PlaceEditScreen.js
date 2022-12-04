@@ -12,8 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { listDetailsPlace } from '../actions/placeActions';
-// import { PLACE_UPDATE_RESET } from '../constants/productConstants';
+import {
+  createPlace,
+  listDetailsPlace,
+  updatePlace,
+} from '../actions/placeActions';
+import { PLACE_UPDATE_RESET } from '../constants/placeConstants';
 
 const PlaceEditScreen = () => {
   const { id } = useParams();
@@ -33,26 +37,31 @@ const PlaceEditScreen = () => {
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
 
-  // const placeUpdate = useSelector((state) => state.placeUpdate);
-  // const {
-  //   loading: loadingUpdate,
-  //   error: errorUpdate,
-  //   success: successUpdate,
-  // } = placeUpdate;
+  const placeUpdate = useSelector((state) => state.placeUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = placeUpdate;
 
   useEffect(() => {
-    if (!place.name || place._id !== id) {
-      dispatch(listDetailsPlace(id));
+    if (successUpdate) {
+      dispatch({ type: PLACE_UPDATE_RESET });
+      navigate('/admin/placelist');
     } else {
-      setName(place.name);
-      setPrice(place.price);
-      setImage(place.image);
-      setType(place.type);
-      setOriginCountry(place.originCountry);
-      setNumberOfSeat(place.numberOfSeat);
-      setDescription(place.description);
+      if (!place.name || place._id !== id) {
+        dispatch(listDetailsPlace(id));
+      } else {
+        setName(place.name);
+        setPrice(place.price);
+        setImage(place.image);
+        setType(place.type);
+        setOriginCountry(place.originCountry);
+        setNumberOfSeat(place.numberOfSeat);
+        setDescription(place.description);
+      }
     }
-  }, [dispatch, place, id, navigate]);
+  }, [dispatch, place, id, navigate, successUpdate, createPlace]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -76,19 +85,19 @@ const PlaceEditScreen = () => {
   };
 
   const submitHandler = (e) => {
-    // e.preventDefault();
-    // dispatch(
-    //   updateProduct({
-    //     _id: id,
-    //     name,
-    //     price,
-    //     image,
-    //     brand,
-    //     category,
-    //     description,
-    //     countInStock,
-    //   })
-    // );
+    e.preventDefault();
+    dispatch(
+      updatePlace({
+        _id: id,
+        name,
+        price,
+        image,
+        type,
+        originCountry,
+        description,
+        numberOfSeat,
+      })
+    );
   };
 
   return (
@@ -99,8 +108,8 @@ const PlaceEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Place</h1>
-        {/* {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>} */}
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
@@ -201,6 +210,7 @@ const PlaceEditScreen = () => {
             </FormGroup>
             <h5> </h5>
 
+            <h5> </h5>
             <div className="d-grid gap-3">
               <Button type="submit" variant="primary">
                 Update

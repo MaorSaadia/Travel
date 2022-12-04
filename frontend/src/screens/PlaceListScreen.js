@@ -43,7 +43,14 @@ const PlaceListScreen = () => {
     } else {
       dispatch(listPlaces());
     }
-  }, [dispatch, navigate, userInfo, successDelete, successCreate, createPlace]);
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdPlace,
+  ]);
 
   const deleteHandler = (id) => {
     if (window.confirm(`Are You Sure You Want to Delete`)) {
@@ -63,7 +70,7 @@ const PlaceListScreen = () => {
         </Col>
         <Col className="text-right"></Col>
         <Button className="my-3" onClick={createPlaceHandler}>
-          <i className="fas fa-plus"></i> Create Place
+          <i className="fas fa-plus"></i> Add Place Travel
         </Button>
       </Row>
       {loadingDelete && <Loader />}

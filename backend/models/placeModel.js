@@ -21,7 +21,7 @@ const placeSchema = mongoose.Schema(
     },
     flightDate: {
       type: String,
-      required: true,
+      required: false,
     },
     description: {
       type: String,

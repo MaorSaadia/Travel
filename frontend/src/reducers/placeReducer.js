@@ -12,6 +12,10 @@ import {
   PLACE_CREATE_SUCCESS,
   PLACE_CREATE_FAIL,
   PLACE_CREATE_RESET,
+  PLACE_UPDATE_REQUEST,
+  PLACE_UPDATE_SUCCESS,
+  PLACE_UPDATE_FAIL,
+  PLACE_UPDATE_RESET,
 } from '../constants/placeConstants';
 
 export const placeListReducer = (state = { places: [] }, action) => {
@@ -71,17 +75,17 @@ export const placeCreateReducer = (state = {}, action) => {
   }
 };
 
-// export const productUpdateReducer = (state = { product: {} }, action) => {
-//   switch (action.type) {
-//     case PRODUCT_UPDATE_REQUEST:
-//       return { loading: true };
-//     case PRODUCT_UPDATE_SUCCESS:
-//       return { loading: false, success: true, product: action.payload };
-//     case PRODUCT_UPDATE_FAIL:
-//       return { loading: false, error: action.payload };
-//     case PRODUCT_UPDATE_RESET:
-//       return { product: {} };
-//     default:
-//       return state;
-//   }
-// };
+export const placeUpdateReducer = (state = { place: {} }, action) => {
+  switch (action.type) {
+    case PLACE_UPDATE_REQUEST:
+      return { loading: true };
+    case PLACE_UPDATE_SUCCESS:
+      return { loading: false, success: true, place: action.payload };
+    case PLACE_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PLACE_UPDATE_RESET:
+      return { place: {} };
+    default:
+      return state;
+  }
+};

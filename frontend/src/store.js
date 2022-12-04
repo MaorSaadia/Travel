@@ -7,6 +7,7 @@ import {
   placeDetailsReducer,
   placeDeleteReducer,
   placeCreateReducer,
+  placeUpdateReducer,
 } from './reducers/placeReducer';
 import {
   userLoginReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   placeDetails: placeDetailsReducer,
   placeDelete: placeDeleteReducer,
   placeCreate: placeCreateReducer,
+  placeUpdate: placeUpdateReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,

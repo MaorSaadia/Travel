@@ -12,6 +12,9 @@ import {
   PLACE_CREATE_REQUEST,
   PLACE_CREATE_SUCCESS,
   PLACE_CREATE_FAIL,
+  PLACE_UPDATE_REQUEST,
+  PLACE_UPDATE_SUCCESS,
+  PLACE_UPDATE_FAIL,
 } from '../constants/placeConstants';
 
 export const listPlaces = () => async (dispatch) => {
@@ -121,40 +124,36 @@ export const createPlace = () => async (dispatch, getState) => {
   }
 };
 
-// export const updatePlace = (product) => async (dispatch, getState) => {
-//   try {
-//     dispatch({
-//       type: PRODUCT_UPDATE_REQUEST,
-//     });
+export const updatePlace = (place) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PLACE_UPDATE_REQUEST,
+    });
 
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-//     const config = {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
 
-//     const { data } = await axios.put(
-//       `/api/products/${product._id}`,
-//       product,
-//       config
-//     );
+    const { data } = await axios.put(`/api/places/${place._id}`, place, config);
 
-//     dispatch({
-//       type: PRODUCT_UPDATE_SUCCESS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: PRODUCT_UPDATE_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: PLACE_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PLACE_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

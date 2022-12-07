@@ -12,6 +12,7 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PlaceListScreen from './screens/PlaceListScreen';
 import PlaceEditScreen from './screens/PlaceEditScreen';
+import PaymentScreen from './screens/PaymentScreen';
 
 const App = () => {
   return (
@@ -21,7 +22,9 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
+            <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route path="/places/:id" element={<TravelsScreen />} />
+            <Route path="/payment/:id" element={<PaymentScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />

@@ -18,6 +18,12 @@ import {
   userDeleteReducer,
   userUpdateReducer,
 } from './reducers/userReducer';
+import {
+  bookingCreateReducer,
+  bookingDetailsReducer,
+} from './reducers/bookingReducer';
+
+//import { paymentReducer } from './reducers/paymentReducer';
 
 const reducer = combineReducers({
   placeList: placeListReducer,
@@ -32,11 +38,18 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  bookingCreate: bookingCreateReducer,
+  bookingDetails: bookingDetailsReducer,
+  // payment: paymentReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
+
+// const paymentPlaceFromStorage = localStorage.getItem('paymentPlace')
+//   ? JSON.parse(localStorage.getItem('paymentPlace'))
+//   : [];
 
 const intialState = {
   userLogin: { userInfo: userInfoFromStorage },

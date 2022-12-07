@@ -8,6 +8,7 @@ import connectDB from './data/config/db.js';
 import placeRoutes from './routes/placeRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/api/places', placeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/booking', bookingRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

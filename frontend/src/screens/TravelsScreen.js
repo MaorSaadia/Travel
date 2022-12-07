@@ -17,7 +17,7 @@ import { listDetailsPlace } from '../actions/placeActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -138,7 +138,7 @@ const TravelsScreen = () => {
                       variant="outline-info"
                       disabled={place.numberOfSeat === 0}
                     >
-                      <i className="fa-solid fa-ticket"></i> Buy Ticket
+                      <i className="fa-solid fa-ticket"></i> Book Place
                     </Button>
                   </div>
                 </ListGroupItem>

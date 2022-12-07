@@ -5,11 +5,13 @@ main {
 h1 {
   font-size: 2rem;
   padding: 1rem 0;
+  text-align: center;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.4rem;
   padding: 0.5rem 0;
+  text-align: center;
 }
 
 h3 {
@@ -25,4 +27,9 @@ th,
 td {
   text-align: center;
   vertical-align: middle;
+}
+
+hr {
+  border: 10px solid SeaGreen;
+  border-radius: 5px;
 }

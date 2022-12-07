@@ -5,7 +5,16 @@ import Place from '../models/placeModel.js';
 // @route GET /api/place
 // @access Public
 const getPlaces = asyncHandler(async (req, res) => {
-  const places = await Place.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const places = await Place.find({ ...keyword });
   res.json(places);
 });
 
@@ -50,7 +59,7 @@ const createPlace = asyncHandler(async (req, res) => {
     originCountry: 'NaN',
     numberOfSeat: 0,
     flightDate: '00/00/0000',
-    description: 'Sample description',
+    description: 'description',
   });
 
   const createdPlace = await place.save();

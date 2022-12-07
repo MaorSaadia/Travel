@@ -17,26 +17,28 @@ import {
   PLACE_UPDATE_FAIL,
 } from '../constants/placeConstants';
 
-export const listPlaces = () => async (dispatch) => {
-  try {
-    dispatch({ type: PLACE_LIST_REQUEST });
+export const listPlaces =
+  (keyword = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PLACE_LIST_REQUEST });
 
-    const { data } = await axios.get('/api/places');
+      const { data } = await axios.get(`/api/places?keyword=${keyword}`);
 
-    dispatch({
-      type: PLACE_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: PLACE_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: PLACE_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PLACE_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listDetailsPlace = (id) => async (dispatch) => {
   try {

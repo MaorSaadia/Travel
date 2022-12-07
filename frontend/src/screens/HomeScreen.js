@@ -6,16 +6,19 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Meta from '../components/Meta';
 import { listPlaces } from '../actions/placeActions';
+import { useParams } from 'react-router-dom';
 
 const HomeScreen = () => {
+  const { keyword } = useParams();
+
   const dispatch = useDispatch();
 
   const placeList = useSelector((state) => state.placeList);
   const { loading, error, places } = placeList;
 
   useEffect(() => {
-    dispatch(listPlaces());
-  }, [dispatch]);
+    dispatch(listPlaces(keyword));
+  }, [dispatch, keyword]);
 
   const [sortState, setSortState] = useState('none');
   const sortMethods = {

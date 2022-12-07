@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const orderSchema = mongoose.Schema(
+const bookingSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -20,12 +20,6 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
-    // shippingAddress: {
-    //   address: { type: String, required: true },
-    //   city: { type: String, required: true },
-    //   postalCode: { type: String, required: true },
-    //   country: { type: String, required: true },
-    // },
     paymentMethod: {
       type: String,
       required: true,
@@ -36,7 +30,12 @@ const orderSchema = mongoose.Schema(
       update_time: { type: String },
       email_address: { type: String },
     },
-    Price: {
+    placePrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
+    totalPrice: {
       type: Number,
       required: true,
       default: 0.0,
@@ -55,6 +54,6 @@ const orderSchema = mongoose.Schema(
   }
 );
 
-const Order = mongoose.model('Order', orderSchema);
+const Booking = mongoose.model('Booking', bookingSchema);
 
-export default Order;
+export default Booking;

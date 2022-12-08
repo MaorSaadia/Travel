@@ -82,14 +82,14 @@ const updateBookingToPaid = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc Get logged in user order
-// // @route GET /api/orders/myorders
-// // @access private
-// const getMyOrders = asyncHandler(async (req, res) => {
-//   const orders = await Order.find({ user: req.user._id });
+// @desc Get logged in user order
+// @route GET /api/payment/mybooking
+// @access private
+const getMyBooking = asyncHandler(async (req, res) => {
+  const order = await Booking.find({ user: req.user._id });
 
-//   res.json(orders);
-// });
+  res.json(order);
+});
 
 // // @desc Get all orders
 // // @route GET /api/orders
@@ -100,4 +100,4 @@ const updateBookingToPaid = asyncHandler(async (req, res) => {
 //   res.json(orders);
 // });
 
-export { addBookingPlace, getBookingByid, updateBookingToPaid };
+export { addBookingPlace, getBookingByid, updateBookingToPaid, getMyBooking };

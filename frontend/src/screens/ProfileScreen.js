@@ -8,13 +8,17 @@ import {
   FormGroup,
   FormLabel,
   FormControl,
+  Table,
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Meta from '../components/Meta';
 import { getUserDetails, UpadateUserProfile } from '../actions/userActions';
-// import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import { listMyOrder } from '../actions/bookingActions';
+
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -36,16 +40,17 @@ const ProfileScreen = () => {
   const userUpadateProfile = useSelector((state) => state.userUpadateProfile);
   const { success } = userUpadateProfile;
 
-  // const orderListMy = useSelector((state) => state.orderListMy);
-  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  const bookingListMy = useSelector((state) => state.bookingListMy);
+  const { loading: loadingBooking, error: errorBooking, order } = bookingListMy;
 
   useEffect(() => {
     if (!userInfo) {
       navigate('/login');
     } else {
       if (!user.name || success) {
-        // dispatch({ type: USER_UPDATE_PROFILE_RESET });
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'));
+        dispatch(listMyOrder());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -125,6 +130,58 @@ const ProfileScreen = () => {
               </Button>
             </div>
           </Form>
+        </Col>
+        <Col md={9}>
+          <h2>My Booking</h2>
+          {loadingBooking ? (
+            <Loader />
+          ) : errorBooking ? (
+            <Message variant="danger">{errorBooking}</Message>
+          ) : (
+            <Table striped bordered hover responsive className="table-sm">
+              <thead>
+                <tr>
+                  <th>TRAVEL NAME</th>
+                  <th>TICKETS</th>
+                  <th>COST</th>
+                  <th>FLIGHT DATE</th>
+                  <th>PAID</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {order?.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order.placeName}</td>
+                    <td>{order.numberOfTicket}</td>
+                    <td>{order.totalPrice}$ </td>
+                    <td>{order.flightDate} </td>
+                    <td>
+                      {order.isPaid ? (
+                        <i
+                          className="fas fa-check"
+                          style={{ color: 'green' }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
+
+                    <td>
+                      <LinkContainer to={`/payment/${order._id}`}>
+                        <div className="d-grid gap-3">
+                          <Button className="btn-sm">Details</Button>
+                        </div>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
         </Col>
       </Row>
     </>

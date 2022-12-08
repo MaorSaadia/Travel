@@ -14,6 +14,7 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { listDetailsPlace } from '../actions/placeActions';
+import { createOrder } from '../actions/bookingActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
@@ -49,8 +50,28 @@ const TravelsScreen = () => {
   //   const userLogin = useSelector((state) => state.userLogin);
   //   const { userInfo } = userLogin;
 
+  const bookingCreate = useSelector((state) => state.bookingCreate);
+  const { order, success, error: errorBooking } = bookingCreate;
+
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate(`/payment/${id}?qty=${qty}`);
+  //   }
+  // }, [navigate, id, qty, success, errorBooking]);
+
   const submitHandler = () => {
-    navigate(`/payment/${id}?qty=${qty}`);
+    dispatch(
+      createOrder({
+        placeName: place.name,
+        numberOfTicket: Number(qty),
+        paymentMethod: 'PayPal',
+        placePrice: place.price,
+        totalPrice: place.price * qty,
+      })
+    );
+    if (success) {
+      navigate(`/payment/${order._id}?qty=${qty}`);
+    }
   };
 
   return (
@@ -130,6 +151,12 @@ const TravelsScreen = () => {
                     </Row>
                   </ListGroupItem>
                 )}
+
+                <ListGroupItem>
+                  {errorBooking && (
+                    <Message variant="danger">{errorBooking}</Message>
+                  )}
+                </ListGroupItem>
 
                 <ListGroupItem>
                   <div className="d-grid gap-2">

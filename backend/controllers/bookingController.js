@@ -2,19 +2,22 @@ import asyncHandler from 'express-async-handler';
 import Booking from '../models/bookingModel.js';
 
 // @desc Create new booking
-// @route POST /api/bookings
+// @route POST /api/orders
 // @access private
 const addBookingPlace = asyncHandler(async (req, res) => {
-  const { orderTicket, paymentMethod, placePrice, totalPrice } = req.body;
+  const { numberOfTicket, placeName, paymentMethod, placePrice, totalPrice } =
+    req.body;
 
-  if (orderTicket && orderTicket.length === 0) {
+  if (numberOfTicket && numberOfTicket.length === 0) {
     res.status(400);
     throw new Error('No Booking Places');
+    return;
   } else {
-    const orderTicket = new Booking({
-      orderTicket,
+    const order = new Booking({
       user: req.user._id,
+      placeName,
       paymentMethod,
+      numberOfTicket,
       placePrice,
       totalPrice,
     });
@@ -26,7 +29,7 @@ const addBookingPlace = asyncHandler(async (req, res) => {
 });
 
 // @desc Get booking by ID
-// @route GET /api/booking/:id
+// @route GET /api/orders/:id
 // @access private
 const getBookingByid = asyncHandler(async (req, res) => {
   const booking = await Booking.findById(req.params.id).populate(
@@ -34,7 +37,7 @@ const getBookingByid = asyncHandler(async (req, res) => {
     'name email'
   );
   if (booking) {
-    res.json(order);
+    res.json(booking);
   } else {
     res.status(404);
     throw new Error('Booking Order Not Found');

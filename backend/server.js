@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.use('/api/places', placeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
-app.use('/api/booking', bookingRoutes);
+app.use('/api/orders', bookingRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

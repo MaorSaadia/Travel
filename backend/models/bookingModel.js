@@ -8,18 +8,35 @@ const bookingSchema = mongoose.Schema(
       ref: 'User',
     },
 
-    orderTicket: [
-      {
-        name: { type: String, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
-        place: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: 'Place',
-        },
-      },
-    ],
+    // orderTicket: [
+    //   {
+    //     name: { type: String, required: true },
+    //     image: { type: String, required: true },
+    //     price: { type: Number, required: true },
+    //     place: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       required: true,
+    //       ref: 'Place',
+    //     },
+    //   },
+    // ],
+
+    // orderTicket: {
+    //   place: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: 'Place',
+    //   },
+    // },
+
+    placeName: {
+      type: String,
+      required: true,
+    },
+    numberOfTicket: {
+      type: Number,
+      required: true,
+    },
     paymentMethod: {
       type: String,
       required: true,

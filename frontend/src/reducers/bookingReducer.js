@@ -28,7 +28,7 @@ export const bookingCreateReducer = (state = {}, action) => {
       return {
         loading: false,
         success: true,
-        booking: action.payload,
+        order: action.payload,
       };
     case BOOKING_CREATE_FAIL:
       return {
@@ -53,7 +53,7 @@ export const bookingDetailsReducer = (
     case BOOKING_DETAILS_SUCCESS:
       return {
         loading: false,
-        booking: action.payload,
+        order: action.payload,
       };
     case BOOKING_DETAILS_FAIL:
       return {
@@ -97,7 +97,7 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
     case BOOKING_LIST_MY_SUCCESS:
       return {
         loading: false,
-        booking: action.payload,
+        order: action.payload,
       };
     case BOOKING_LIST_MY_FAIL:
       return {
@@ -120,7 +120,7 @@ export const orderListReducer = (state = { orders: [] }, action) => {
     case BOOKING_LIST_SUCCESS:
       return {
         loading: false,
-        booking: action.payload,
+        order: action.payload,
       };
     case BOOKING_LIST_FAIL:
       return {

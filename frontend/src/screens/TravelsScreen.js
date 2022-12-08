@@ -23,27 +23,9 @@ const TravelsScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const addDays = () => {
-  //   const date = new Date();
-  //   let datesCollection = [];
-
-  //   for (var i = 1; i < 90; i += 5) {
-  //     const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
-  //     datesCollection.push(
-  //       `${newDate.getDate()}/${
-  //         newDate.getMonth() + 1
-  //       }/${newDate.getFullYear()}`
-  //     );
-  //   }
-
-  //   return datesCollection;
-  // };
-
   useEffect(() => {
     dispatch(listDetailsPlace(id));
   }, [dispatch, id]);
-
-  // console.log(addDays());
 
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
@@ -53,12 +35,6 @@ const TravelsScreen = () => {
 
   const bookingCreate = useSelector((state) => state.bookingCreate);
   const { order, success, error: errorBooking } = bookingCreate;
-
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate(`/payment/${id}?qty=${qty}`);
-  //   }
-  // }, [navigate, id, qty, success, errorBooking]);
 
   const submitHandler = () => {
     dispatch(
@@ -74,15 +50,14 @@ const TravelsScreen = () => {
         totalPrice: place.price * qty,
       })
     );
+
     setCheck(true);
-    // if (success) {
-    //   navigate(`/payment/${order._id}?qty=${qty}`);
-    // }
   };
 
   const goToPayment = () => {
     if (success) {
       navigate(`/payment/${order._id}?qty=${qty}`);
+      window.location.reload();
     }
   };
 

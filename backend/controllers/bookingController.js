@@ -5,8 +5,17 @@ import Booking from '../models/bookingModel.js';
 // @route POST /api/orders
 // @access private
 const addBookingPlace = asyncHandler(async (req, res) => {
-  const { numberOfTicket, placeName, paymentMethod, placePrice, totalPrice } =
-    req.body;
+  const {
+    numberOfTicket,
+    placeName,
+    image,
+    originCountry,
+    flightDate,
+    type,
+    paymentMethod,
+    placePrice,
+    totalPrice,
+  } = req.body;
 
   if (numberOfTicket && numberOfTicket.length === 0) {
     res.status(400);
@@ -16,10 +25,14 @@ const addBookingPlace = asyncHandler(async (req, res) => {
     const order = new Booking({
       user: req.user._id,
       placeName,
-      paymentMethod,
-      numberOfTicket,
+      image,
+      originCountry,
+      flightDate,
+      type,
       placePrice,
       totalPrice,
+      paymentMethod,
+      numberOfTicket,
     });
 
     const bookingOrder = await order.save();

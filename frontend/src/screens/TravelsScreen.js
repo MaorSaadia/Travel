@@ -65,6 +65,10 @@ const TravelsScreen = () => {
       createOrder({
         placeName: place.name,
         numberOfTicket: Number(qty),
+        image: place.image,
+        originCountry: place.originCountry,
+        flightDate: place.flightDate,
+        type: place.type,
         paymentMethod: 'PayPal',
         placePrice: place.price,
         totalPrice: place.price * qty,

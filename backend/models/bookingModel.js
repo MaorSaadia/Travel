@@ -21,12 +21,11 @@ const bookingSchema = mongoose.Schema(
     //   },
     // ],
 
-    place: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: 'Place',
-    },
     placeName: {
+      type: String,
+      required: true,
+    },
+    image: {
       type: String,
       required: true,
     },
@@ -34,15 +33,17 @@ const bookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    paymentMethod: {
+    originCountry: {
       type: String,
       required: true,
     },
-    paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
+    flightDate: {
+      type: String,
+      required: false,
+    },
+    type: {
+      type: String,
+      required: true,
     },
     placePrice: {
       type: Number,
@@ -54,6 +55,17 @@ const bookingSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    paymentMethod: {
+      type: String,
+      required: true,
+    },
+    paymentResult: {
+      id: { type: String },
+      status: { type: String },
+      update_time: { type: String },
+      email_address: { type: String },
+    },
+
     isPaid: {
       type: Boolean,
       required: true,

@@ -14,7 +14,7 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
-import { listDetailsPlace } from '../actions/placeActions';
+//import { listDetailsPlace } from '../actions/placeActions';
 import { getOrderDetails } from '../actions/bookingActions';
 
 const PaymentScreen = () => {
@@ -24,8 +24,8 @@ const PaymentScreen = () => {
 
   const qty = search ? Number(search.split('=')[1]) : 1;
 
-  const placeDetails = useSelector((state) => state.placeDetails);
-  const { loading, error, place } = placeDetails;
+  // const placeDetails = useSelector((state) => state.placeDetails);
+  // const { loading, error, place } = placeDetails;
 
   const bookingDetails = useSelector((state) => state.bookingDetails);
   const {
@@ -35,9 +35,9 @@ const PaymentScreen = () => {
   } = bookingDetails;
 
   useEffect(() => {
-    dispatch(listDetailsPlace(place._id));
+    // dispatch(listDetailsPlace(place._id));
     dispatch(getOrderDetails(id));
-  }, [dispatch, place._id, id]);
+  }, [dispatch, id]);
 
   //   const userLogin = useSelector((state) => state.userLogin);
   //   const { userInfo } = userLogin;
@@ -61,25 +61,28 @@ const PaymentScreen = () => {
       ) : (
         <Row>
           <Col md={2}>
-            <Image src={place.image} alt={place.name} fluid rounded />
+            <Image src={order.image} alt={order.placeName} fluid rounded />
           </Col>
 
           <Row md={7}>
             <ListGroup variant="flush">
               <ListGroupItem>
-                <h3>{place.name}</h3>
+                <h3>{order.placeName}</h3>
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Price For Ticket:</strong> ${place.price}
+                <strong>Price For Ticket: </strong> ${order.placePrice}
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Origin Country:</strong> {place.originCountry}
+                <strong>FlightDate: </strong> {order.flightDate}
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Type:</strong> {place.type}
+                <strong>Origin Country: </strong> {order.originCountry}
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Number Of Ticket's:</strong> {qty}
+                <strong>Type:</strong> {order.type}
+              </ListGroupItem>
+              <ListGroupItem>
+                <strong>Number Of Ticket's: </strong> {qty}
               </ListGroupItem>{' '}
               <ListGroupItem>
                 {order.isPaid ? (
@@ -99,7 +102,7 @@ const PaymentScreen = () => {
               <Card.Header as="h2">How Much To Pay</Card.Header>
               <ListGroup variant="flush">
                 <ListGroupItem>
-                  <strong>Total: </strong> ${place.price * qty}
+                  <strong>Total: </strong> ${order.totalPrice}
                 </ListGroupItem>
               </ListGroup>
             </Card>

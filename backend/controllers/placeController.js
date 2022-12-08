@@ -51,7 +51,7 @@ const deletePlace = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const createPlace = asyncHandler(async (req, res) => {
   const place = new Place({
-    name: 'Sample name',
+    name: 'name',
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpg',

@@ -19,6 +19,7 @@ import { createOrder } from '../actions/bookingActions';
 const TravelsScreen = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
+  const [check, setCheck] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -69,6 +70,13 @@ const TravelsScreen = () => {
         totalPrice: place.price * qty,
       })
     );
+    setCheck(true);
+    // if (success) {
+    //   navigate(`/payment/${order._id}?qty=${qty}`);
+    // }
+  };
+
+  const goToPayment = () => {
     if (success) {
       navigate(`/payment/${order._id}?qty=${qty}`);
     }
@@ -163,9 +171,21 @@ const TravelsScreen = () => {
                     <Button
                       onClick={submitHandler}
                       variant="outline-info"
-                      disabled={place.numberOfSeat === 0}
+                      disabled={place.numberOfSeat === 0 || check}
                     >
                       <i className="fa-solid fa-ticket"></i> Book Place
+                    </Button>
+                  </div>
+                </ListGroupItem>
+
+                <ListGroupItem>
+                  <div className="d-grid gap-2">
+                    <Button
+                      onClick={goToPayment}
+                      variant="outline-info"
+                      disabled={!check}
+                    >
+                      Continue To Payment
                     </Button>
                   </div>
                 </ListGroupItem>

@@ -15,6 +15,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { listDetailsPlace } from '../actions/placeActions';
+import { getOrderDetails } from '../actions/bookingActions';
 
 const PaymentScreen = () => {
   const { id } = useParams();
@@ -23,12 +24,20 @@ const PaymentScreen = () => {
 
   const qty = search ? Number(search.split('=')[1]) : 1;
 
-  useEffect(() => {
-    dispatch(listDetailsPlace(id));
-  }, [dispatch, id]);
-
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
+
+  const bookingDetails = useSelector((state) => state.bookingDetails);
+  const {
+    order,
+    loading: detailsLoading,
+    error: detailsError,
+  } = bookingDetails;
+
+  useEffect(() => {
+    dispatch(listDetailsPlace(place._id));
+    dispatch(getOrderDetails(id));
+  }, [dispatch, place._id, id]);
 
   //   const userLogin = useSelector((state) => state.userLogin);
   //   const { userInfo } = userLogin;
@@ -45,10 +54,10 @@ const PaymentScreen = () => {
       <h1>PAYMENT SCREEN</h1>
       <hr></hr>
 
-      {loading ? (
+      {detailsLoading ? (
         <Loader />
-      ) : error ? (
-        <Message variant="danger"> {error}</Message>
+      ) : detailsError ? (
+        <Message variant="danger"> {detailsError}</Message>
       ) : (
         <Row>
           <Col md={2}>
@@ -60,7 +69,6 @@ const PaymentScreen = () => {
               <ListGroupItem>
                 <h3>{place.name}</h3>
               </ListGroupItem>
-
               <ListGroupItem>
                 <strong>Price For Ticket:</strong> ${place.price}
               </ListGroupItem>
@@ -72,9 +80,17 @@ const PaymentScreen = () => {
               </ListGroupItem>
               <ListGroupItem>
                 <strong>Number Of Ticket's:</strong> {qty}
+              </ListGroupItem>{' '}
+              <ListGroupItem>
+                {order.isPaid ? (
+                  <Message variant="success">Paid On {order.paidAt}</Message>
+                ) : (
+                  <Message variant="danger">Not Paid</Message>
+                )}
               </ListGroupItem>
             </ListGroup>
           </Row>
+
           <Row className="justify-content-md-center">
             <Card
               border="square border border-5 border-dark"

@@ -21,14 +21,11 @@ const bookingSchema = mongoose.Schema(
     //   },
     // ],
 
-    // orderTicket: {
-    //   place: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'Place',
-    //   },
-    // },
-
+    place: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'Place',
+    },
     placeName: {
       type: String,
       required: true,

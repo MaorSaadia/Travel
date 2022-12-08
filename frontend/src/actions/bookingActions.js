@@ -34,7 +34,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/orders`, order, config);
+    const { data } = await axios.post(`/api/payment`, order, config);
 
     dispatch({
       type: BOOKING_CREATE_SUCCESS,
@@ -67,7 +67,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/${id}`, config);
+    const { data } = await axios.get(`/api/payment/${id}`, config);
 
     dispatch({
       type: BOOKING_DETAILS_SUCCESS,
@@ -103,7 +103,7 @@ export const payOrder =
       };
 
       const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
+        `/api/payment/${orderId}/pay`,
         paymentResult,
         config
       );

@@ -65,7 +65,7 @@ export const bookingDetailsReducer = (
   }
 };
 
-export const orderPayReducer = (state = {}, action) => {
+export const bookingPayReducer = (state = {}, action) => {
   switch (action.type) {
     case BOOKING_PAY_REQUEST:
       return {
@@ -88,7 +88,7 @@ export const orderPayReducer = (state = {}, action) => {
   }
 };
 
-export const orderListMyReducer = (state = { orders: [] }, action) => {
+export const bookingListMyReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case BOOKING_LIST_MY_REQUEST:
       return {
@@ -111,7 +111,7 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
   }
 };
 
-export const orderListReducer = (state = { orders: [] }, action) => {
+export const bookingListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case BOOKING_LIST_REQUEST:
       return {

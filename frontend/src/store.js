@@ -21,6 +21,7 @@ import {
 import {
   bookingCreateReducer,
   bookingDetailsReducer,
+  bookingPayReducer,
 } from './reducers/bookingReducer';
 
 //import { paymentReducer } from './reducers/paymentReducer';
@@ -40,6 +41,7 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   bookingCreate: bookingCreateReducer,
   bookingDetails: bookingDetailsReducer,
+  bookingPay: bookingPayReducer,
   // payment: paymentReducer,
 });
 

@@ -14,12 +14,11 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { listDetailsPlace } from '../actions/placeActions';
-import { createOrder } from '../actions/bookingActions';
+// import { createOrder } from '../actions/bookingActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
-  const [check, setCheck] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,34 +29,14 @@ const TravelsScreen = () => {
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
 
-  //   const userLogin = useSelector((state) => state.userLogin);
-  //   const { userInfo } = userLogin;
-
-  const bookingCreate = useSelector((state) => state.bookingCreate);
-  const { order, success, error: errorBooking } = bookingCreate;
-
-  const submitHandler = () => {
-    dispatch(
-      createOrder({
-        placeName: place.name,
-        numberOfTicket: Number(qty),
-        image: place.image,
-        originCountry: place.originCountry,
-        flightDate: place.flightDate,
-        type: place.type,
-        paymentMethod: 'PayPal',
-        placePrice: place.price,
-        totalPrice: place.price * qty,
-      })
-    );
-
-    setCheck(true);
-  };
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const goToPayment = () => {
-    if (success) {
-      navigate(`/payment/${order._id}?qty=${qty}`);
-      window.location.reload();
+    if (!userInfo) {
+      window.confirm('You Must Sign In First To Book Place');
+    } else {
+      navigate(`/payment/${id}?qty=${qty}`);
     }
   };
 
@@ -81,7 +60,6 @@ const TravelsScreen = () => {
               <ListGroupItem>
                 <h3>{place.name}</h3>
               </ListGroupItem>
-
               <ListGroupItem>
                 <strong>Price:</strong> ${place.price}
               </ListGroupItem>
@@ -140,29 +118,11 @@ const TravelsScreen = () => {
                 )}
 
                 <ListGroupItem>
-                  {errorBooking && (
-                    <Message variant="danger">{errorBooking}</Message>
-                  )}
-                </ListGroupItem>
-
-                <ListGroupItem>
-                  <div className="d-grid gap-2">
-                    <Button
-                      onClick={submitHandler}
-                      variant="outline-info"
-                      disabled={place.numberOfSeat === 0 || check}
-                    >
-                      <i className="fa-solid fa-ticket"></i> Book Place
-                    </Button>
-                  </div>
-                </ListGroupItem>
-
-                <ListGroupItem>
                   <div className="d-grid gap-2">
                     <Button
                       onClick={goToPayment}
                       variant="outline-info"
-                      disabled={!check}
+                      disabled={place.numberOfSeat === 0}
                     >
                       Continue To Payment
                     </Button>

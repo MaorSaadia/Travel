@@ -10,7 +10,6 @@ import {
   FormControl,
   Table,
 } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -145,8 +144,6 @@ const ProfileScreen = () => {
                   <th>TICKETS</th>
                   <th>COST</th>
                   <th>FLIGHT DATE</th>
-                  <th>PAID</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -156,27 +153,6 @@ const ProfileScreen = () => {
                     <td>{order.numberOfTicket}</td>
                     <td>{order.totalPrice}$ </td>
                     <td>{order.flightDate} </td>
-                    <td>
-                      {order.isPaid ? (
-                        <i
-                          className="fas fa-check"
-                          style={{ color: 'green' }}
-                        ></i>
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: 'red' }}
-                        ></i>
-                      )}
-                    </td>
-
-                    <td>
-                      <LinkContainer to={`/payment/${order._id}`}>
-                        <div className="d-grid gap-3">
-                          <Button className="btn-sm">Details</Button>
-                        </div>
-                      </LinkContainer>
-                    </td>
                   </tr>
                 ))}
               </tbody>

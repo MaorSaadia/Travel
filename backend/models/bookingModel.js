@@ -7,7 +7,6 @@ const bookingSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-
     placeName: {
       type: String,
       required: true,
@@ -51,12 +50,6 @@ const bookingSchema = mongoose.Schema(
       status: { type: String },
       update_time: { type: String },
       email_address: { type: String },
-    },
-
-    isPaid: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
     paidAt: {
       type: Date,

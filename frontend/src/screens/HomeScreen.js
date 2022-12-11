@@ -35,7 +35,6 @@ const HomeScreen = () => {
     <>
       <Meta title={'Travel+ | Home'} />
 
-      {/* <h1 className="fancy">Hot Places</h1> */}
       {loading ? (
         <Loader />
       ) : error ? (

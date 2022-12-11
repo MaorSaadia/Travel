@@ -107,7 +107,9 @@ const PlaceEditScreen = () => {
       </Link>
 
       <FormContainer>
-        <h1>Edit Place</h1>
+        <hr></hr>
+        <h1>EDIT PLACE</h1>
+        <hr></hr>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (

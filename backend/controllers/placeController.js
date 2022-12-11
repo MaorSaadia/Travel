@@ -58,7 +58,6 @@ const createPlace = asyncHandler(async (req, res) => {
     type: 'One-Way',
     originCountry: 'NaN',
     numberOfSeat: 0,
-    flightDate: '00/00/0000',
     description: 'description',
   });
 
@@ -70,16 +69,8 @@ const createPlace = asyncHandler(async (req, res) => {
 // @route PUT /api/places/:id
 // @access Private/Admin
 const updatePlace = asyncHandler(async (req, res) => {
-  const {
-    name,
-    price,
-    description,
-    image,
-    type,
-    originCountry,
-    numberOfSeat,
-    flightDate,
-  } = req.body;
+  const { name, price, description, image, type, originCountry, numberOfSeat } =
+    req.body;
 
   const place = await Place.findById(req.params.id);
 
@@ -91,13 +82,12 @@ const updatePlace = asyncHandler(async (req, res) => {
     place.type = type;
     place.originCountry = originCountry;
     place.numberOfSeat = numberOfSeat;
-    place.flightDate = flightDate;
 
     const updatedPlace = await place.save();
     res.json(updatedPlace);
   } else {
     res.status(404);
-    throw new Error('Place not found');
+    throw new Error('Place Not Found');
   }
 });
 

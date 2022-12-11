@@ -53,17 +53,17 @@ const RegisterScreen = () => {
     <>
       <Meta title={'Travel+ | Register'} />
       <FormContainer>
-        <div>
-          <h1> </h1>
-          <h1> </h1>
-        </div>
-        <h1>Sign Up</h1>
+        <hr></hr>
+        <h1>SIGN UP</h1>
+        <hr></hr>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="name">
-            <FormLabel>Name:</FormLabel>
+            <FormLabel>
+              <strong>Name:</strong>
+            </FormLabel>
             <FormControl
               type="name"
               placeholder="Enter name"
@@ -73,7 +73,9 @@ const RegisterScreen = () => {
           </FormGroup>
           <h5> </h5>
           <FormGroup controlId="email">
-            <FormLabel>Email Address:</FormLabel>
+            <FormLabel>
+              <strong>Email Address:</strong>
+            </FormLabel>
             <FormControl
               type="email"
               placeholder="Enter Email"
@@ -84,7 +86,9 @@ const RegisterScreen = () => {
           <h5> </h5>
 
           <FormGroup controlId="password">
-            <FormLabel>Password:</FormLabel>
+            <FormLabel>
+              <strong>Password:</strong>
+            </FormLabel>
             <FormControl
               type="password"
               placeholder="Enter Password"
@@ -95,7 +99,9 @@ const RegisterScreen = () => {
           <h5> </h5>
 
           <FormGroup controlId="confirmPassword">
-            <FormLabel>Confirm Password:</FormLabel>
+            <FormLabel>
+              <strong>Confirm Password:</strong>
+            </FormLabel>
             <FormControl
               type="password"
               placeholder="Confirm Password"

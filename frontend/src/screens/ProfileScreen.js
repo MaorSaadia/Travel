@@ -16,7 +16,6 @@ import Loader from '../components/Loader';
 import Meta from '../components/Meta';
 import { getUserDetails, UpadateUserProfile } from '../actions/userActions';
 import { listMyOrder } from '../actions/bookingActions';
-
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = () => {
@@ -72,14 +71,18 @@ const ProfileScreen = () => {
       <Meta title={'Travel+ | Edit'} />
       <Row>
         <Col md={3}>
-          <h2>Update Profile</h2>
+          <hr></hr>
+          <h1>UPDATE PROFILE</h1>
+          <hr></hr>
           {message && <Message variant="danger">{message}</Message>}
           {error && <Message variant="danger">{error}</Message>}
           {success && <Message variant="success">Profile Updated</Message>}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>
             <FormGroup controlId="name">
-              <FormLabel>Name:</FormLabel>
+              <FormLabel>
+                <strong>Name:</strong>
+              </FormLabel>
               <FormControl
                 type="name"
                 placeholder="Enter name"
@@ -89,7 +92,9 @@ const ProfileScreen = () => {
             </FormGroup>
             <h5> </h5>
             <FormGroup controlId="email">
-              <FormLabel>Email Address:</FormLabel>
+              <FormLabel>
+                <strong>Email Address:</strong>
+              </FormLabel>
               <FormControl
                 type="email"
                 placeholder="Enter Email"
@@ -100,7 +105,9 @@ const ProfileScreen = () => {
             <h5> </h5>
 
             <FormGroup controlId="password">
-              <FormLabel>Password:</FormLabel>
+              <FormLabel>
+                <strong>Password:</strong>
+              </FormLabel>
               <FormControl
                 type="password"
                 placeholder="Enter Password"
@@ -111,7 +118,9 @@ const ProfileScreen = () => {
             <h5> </h5>
 
             <FormGroup controlId="confirmPassword">
-              <FormLabel>Confirm Password:</FormLabel>
+              <FormLabel>
+                <strong>Confirm Password:</strong>
+              </FormLabel>
               <FormControl
                 type="password"
                 placeholder="Confirm Password"
@@ -131,7 +140,9 @@ const ProfileScreen = () => {
           </Form>
         </Col>
         <Col md={9}>
-          <h2>My Booking</h2>
+          <hr></hr>
+          <h1>MY BOOKINGS</h1>
+          <hr></hr>
           {loadingBooking ? (
             <Loader />
           ) : errorBooking ? (

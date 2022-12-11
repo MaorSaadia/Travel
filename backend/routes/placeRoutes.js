@@ -15,6 +15,6 @@ router
   .route('/:id')
   .get(getPlacesById)
   .delete(protect, admin, deletePlace)
-  .put(protect, admin, updatePlace);
+  .put(protect, updatePlace);
 
 export default router;

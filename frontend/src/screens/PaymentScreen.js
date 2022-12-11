@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { PayPalButton } from 'react-paypal-button-v2';
 import {
   Row,
@@ -17,7 +17,9 @@ import Meta from '../components/Meta';
 import { payOrder } from '../actions/bookingActions';
 import { listDetailsPlace } from '../actions/placeActions';
 import { createOrder } from '../actions/bookingActions';
+import { updatePlace } from '../actions/placeActions';
 import { BOOKING_PAY_RESET } from '../constants/bookingConstants';
+import FormContainer from '../components/FormContainer';
 
 const PaymentScreen = () => {
   const { id } = useParams();
@@ -60,12 +62,10 @@ const PaymentScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, id, successPay, isPaid]);
+  }, [dispatch, id, successPay, isPaid, place]);
 
   const successPaymentHandler = (paymentResult) => {
     setIsPaid(true);
-    window.confirm('The Payment Was Successful');
-    //navigate('/');
     dispatch(
       createOrder({
         placeName: place.name,
@@ -77,93 +77,111 @@ const PaymentScreen = () => {
         paymentMethod: 'PayPal',
         placePrice: place.price,
         totalPrice: place.price * qty,
-        isPaid: true,
       })
     );
+    update();
     console.log(paymentResult);
     dispatch(payOrder(order._id, paymentResult));
+  };
+
+  const update = () => {
+    setIsPaid(true);
+    dispatch(
+      updatePlace({
+        _id: id,
+        name: place.name,
+        price: place.price,
+        image: place.image,
+        type: place.type,
+        originCountry: place.originCountry,
+        description: place.description,
+        numberOfSeat: place.numberOfSeat - qty,
+      })
+    );
+
+    console.log(place.numberOfSeat - qty);
   };
 
   return (
     <>
       <Meta title={'Travel+ | Payment'} />
 
-      {/* <Link className="btn btn-info my-3" to={`/places/${id}`}>
+      <Link className="btn btn-info my-3" to={`/places/${id}`}>
         Go Back
-      </Link> */}
+      </Link>
 
-      <hr></hr>
-      <h1>PAYMENT SCREEN</h1>
-      <hr></hr>
-
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger"> {error}</Message>
-      ) : (
-        <Row>
-          <Col md={2}>
-            <Image src={place.image} alt={place.name} fluid rounded />
-          </Col>
-
-          <Row md={7}>
-            <ListGroup variant="flush">
-              <ListGroupItem>
-                <h3>{place.placeName}</h3>
-              </ListGroupItem>
-              <ListGroupItem>
-                <strong>Price For Ticket: </strong> ${place.price}
-              </ListGroupItem>
-              <ListGroupItem>
-                <strong>FlightDate: </strong> {place.flightDate}
-              </ListGroupItem>
-              <ListGroupItem>
-                <strong>Origin Country: </strong> {place.originCountry}
-              </ListGroupItem>
-              <ListGroupItem>
-                <strong>Type:</strong> {place.type}
-              </ListGroupItem>
-              <ListGroupItem>
-                <strong>Number Of Ticket's: </strong> {qty}
-              </ListGroupItem>
-              <ListGroupItem>
-                {isPaid ? (
-                  <Message variant="success">Paid</Message>
-                ) : (
-                  <Message variant="danger">Not Paid</Message>
-                )}
-              </ListGroupItem>
-            </ListGroup>
-          </Row>
-
-          <Row className="justify-content-md-center">
-            <Card
-              border="square border border-5 border-dark"
-              style={{ width: '25rem' }}
-            >
-              <Card.Header as="h2">How Much To Pay</Card.Header>
+      <FormContainer>
+        <hr></hr>
+        <h1>PAYMENT SCREEN</h1>
+        <hr></hr>
+        <h1></h1>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger"> {error}</Message>
+        ) : (
+          <Row>
+            <Col md={4}>
+              <Image src={place.image} alt={place.name} fluid rounded />
+            </Col>
+            <Row md={7}>
               <ListGroup variant="flush">
                 <ListGroupItem>
-                  <strong>Total: </strong> ${place.price * qty}
+                  <h3>{place.name}</h3>
                 </ListGroupItem>
-                {!isPaid && (
-                  <ListGroupItem>
-                    {loadingPay && <Loader />}
-                    {!sdkReady ? (
-                      <Loader />
-                    ) : (
-                      <PayPalButton
-                        amount={place.price * qty}
-                        onSuccess={successPaymentHandler}
-                      />
-                    )}
-                  </ListGroupItem>
-                )}
+                <ListGroupItem>
+                  <strong>Price For Ticket: </strong> ${place.price}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <strong>FlightDate: </strong> {place.flightDate}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <strong>Origin Country: </strong> {place.originCountry}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <strong>Type:</strong> {place.type}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <strong>Number Of Ticket's: </strong> {qty}
+                </ListGroupItem>
               </ListGroup>
-            </Card>
+            </Row>
+            <h1></h1>
+            <h1></h1>
+            <Row className="justify-content-md-center">
+              <Card
+                border="square border border-5 border-dark"
+                style={{ width: '25rem' }}
+              >
+                <Card.Header as="h2">How Much To Pay</Card.Header>
+                <ListGroup variant="flush">
+                  <ListGroupItem>
+                    <strong>Total: </strong> ${place.price * qty}
+                  </ListGroupItem>
+                  {!isPaid && (
+                    <ListGroupItem>
+                      {loadingPay && <Loader />}
+                      {!sdkReady ? (
+                        <Loader />
+                      ) : (
+                        <PayPalButton
+                          amount={place.price * qty}
+                          onSuccess={successPaymentHandler}
+                        />
+                      )}
+                    </ListGroupItem>
+                  )}
+                  <ListGroupItem>
+                    {isPaid && <Message variant="success">PAID</Message>}
+                  </ListGroupItem>
+                </ListGroup>
+              </Card>
+            </Row>
+            {loadingBooking && <Loader />}
+            {errorBooking && <Message variant="danger">{errorBooking}</Message>}
           </Row>
-        </Row>
-      )}
+        )}
+      </FormContainer>
     </>
   );
 };

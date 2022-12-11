@@ -39,7 +39,7 @@ const PlaceListScreen = () => {
       navigate('/login');
     }
     if (successCreate) {
-      navigate(`/admin/place/${createdPlace._id}/edit`);
+      navigate(`/place/${createdPlace._id}/edit`);
     } else {
       dispatch(listPlaces());
     }
@@ -64,10 +64,11 @@ const PlaceListScreen = () => {
 
   return (
     <>
+      <hr></hr>
+      <h1>PLACES</h1>
+      <hr></hr>
       <Row className="align-items-center">
-        <Col>
-          <h1>PLACES</h1>
-        </Col>
+        <Col></Col>
         <Col className="text-right"></Col>
         <Button className="my-3" onClick={createPlaceHandler}>
           <i className="fas fa-plus"></i> Add Place Travel
@@ -103,7 +104,7 @@ const PlaceListScreen = () => {
                   <td>{place.price}$</td>
                   <td>
                     {' '}
-                    <LinkContainer to={`/admin/place/${place._id}/edit`}>
+                    <LinkContainer to={`/place/${place._id}/edit`}>
                       <Button clsssname="btn-sm" variant="dark">
                         <i
                           className="fas fa-edit"

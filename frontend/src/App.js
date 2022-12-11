@@ -30,7 +30,7 @@ const App = () => {
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
-            <Route path="/admin/place/:id/edit" element={<PlaceEditScreen />} />
+            <Route path="/place/:id/edit" element={<PlaceEditScreen />} />
             <Route path="/admin/placelist" element={<PlaceListScreen />} />
           </Routes>
         </Container>

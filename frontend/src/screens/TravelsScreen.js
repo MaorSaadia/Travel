@@ -14,13 +14,13 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { listDetailsPlace } from '../actions/placeActions';
-// import { createOrder } from '../actions/bookingActions';
 
 const TravelsScreen = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let numberOfTicket = 0;
 
   useEffect(() => {
     dispatch(listDetailsPlace(id));
@@ -29,6 +29,12 @@ const TravelsScreen = () => {
   const placeDetails = useSelector((state) => state.placeDetails);
   const { loading, error, place } = placeDetails;
 
+  if (place.numberOfSeat >= 6) {
+    numberOfTicket = 6;
+  } else {
+    numberOfTicket = place.numberOfSeat;
+  }
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -36,7 +42,7 @@ const TravelsScreen = () => {
     if (!userInfo) {
       window.confirm('You Must Sign In First To Book Place');
     } else {
-      navigate(`/payment/${id}?qty=${qty}`);
+      navigate(`/payment/${id}`);
     }
   };
 
@@ -90,7 +96,18 @@ const TravelsScreen = () => {
                   <Row>
                     <Col>Status:</Col>
                     <Col>
-                      {place.numberOfSeat > 0 ? 'Availbale' : 'Sold Out'}
+                      <strong>
+                        {place.numberOfSeat > 0 ? 'Availbale' : 'Sold Out'}
+                      </strong>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+
+                <ListGroupItem>
+                  <Row>
+                    <Col>Seat's Left:</Col>
+                    <Col>
+                      <strong>{place.numberOfSeat}</strong>
                     </Col>
                   </Row>
                 </ListGroupItem>
@@ -106,7 +123,7 @@ const TravelsScreen = () => {
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(6).keys()].map((x) => (
+                          {[...Array(numberOfTicket).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>

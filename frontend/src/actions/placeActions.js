@@ -159,3 +159,41 @@ export const updatePlace = (place) => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateNumberofTicket = (place) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PLACE_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/payment/${place._id}`,
+      place,
+      config
+    );
+
+    dispatch({
+      type: PLACE_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PLACE_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

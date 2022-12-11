@@ -64,7 +64,6 @@ const updateBookingToPaid = asyncHandler(async (req, res) => {
   const order = await Booking.findById(req.params.id);
 
   if (order) {
-    order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
       id: req.body.id,

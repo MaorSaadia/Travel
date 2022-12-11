@@ -20,8 +20,6 @@ const UserEditScreen = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
@@ -60,11 +58,9 @@ const UserEditScreen = () => {
       </Link>
 
       <FormContainer>
-        <div>
-          <h1> </h1>
-          <h1> </h1>
-        </div>
-        <h1>Edit User</h1>
+        <hr></hr>
+        <h1>EDIT USER</h1>
+        <hr></hr>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -74,7 +70,9 @@ const UserEditScreen = () => {
         ) : (
           <Form onSubmit={submitHandler}>
             <FormGroup controlId="name">
-              <FormLabel>Name:</FormLabel>
+              <FormLabel>
+                <strong>Name:</strong>
+              </FormLabel>
               <FormControl
                 type="name"
                 placeholder="Enter name"
@@ -85,7 +83,9 @@ const UserEditScreen = () => {
 
             <h5> </h5>
             <FormGroup controlId="email">
-              <FormLabel>Email Address:</FormLabel>
+              <FormLabel>
+                <strong>Email Address:</strong>
+              </FormLabel>
               <FormControl
                 type="email"
                 placeholder="Enter Email"
@@ -94,17 +94,6 @@ const UserEditScreen = () => {
               ></FormControl>
             </FormGroup>
             <h5> </h5>
-
-            {/* <FormGroup controlId="isadmin">
-              <FormCheck
-                type="checkbox"
-                label="Is Admin"
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              ></FormCheck>
-            </FormGroup>
-            <h5> </h5> */}
-
             <div className="d-grid gap-3">
               <Button type="submit" variant="primary">
                 Update

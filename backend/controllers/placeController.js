@@ -50,15 +50,26 @@ const deletePlace = asyncHandler(async (req, res) => {
 // @route POST /api/places
 // @access Private/Admin
 const createPlace = asyncHandler(async (req, res) => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1;
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  const formattedToday = dd + '/' + mm + '/' + yyyy;
+
   const place = new Place({
     name: 'name',
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpg',
-    type: 'One-Way',
-    originCountry: 'NaN',
+    flightOption: 'Direct Flight',
+    originCountry: 'originCountry',
     numberOfSeat: 0,
     description: 'description',
+    flightDate: formattedToday,
   });
 
   const createdPlace = await place.save();
@@ -69,8 +80,16 @@ const createPlace = asyncHandler(async (req, res) => {
 // @route PUT /api/places/:id
 // @access Private/Admin
 const updatePlace = asyncHandler(async (req, res) => {
-  const { name, price, description, image, type, originCountry, numberOfSeat } =
-    req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    flightOption,
+    originCountry,
+    numberOfSeat,
+    flightDate,
+  } = req.body;
 
   const place = await Place.findById(req.params.id);
 
@@ -79,9 +98,10 @@ const updatePlace = asyncHandler(async (req, res) => {
     place.price = price;
     place.description = description;
     place.image = image;
-    place.type = type;
+    place.flightOption = flightOption;
     place.originCountry = originCountry;
     place.numberOfSeat = numberOfSeat;
+    place.flightDate = flightDate;
 
     const updatedPlace = await place.save();
     res.json(updatedPlace);

@@ -21,13 +21,13 @@ const placeSchema = mongoose.Schema(
     },
     flightDate: {
       type: String,
-      required: false,
+      required: true,
     },
     description: {
       type: String,
       required: true,
     },
-    type: {
+    flightOption: {
       type: String,
       required: true,
     },

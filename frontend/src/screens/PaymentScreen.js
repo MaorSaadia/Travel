@@ -30,6 +30,9 @@ const PaymentScreen = () => {
   const [isPaid, setIsPaid] = useState(false);
 
   const qty = search ? Number(search.split('=')[1]) : 1;
+  let value = search.split('?')[1];
+  let flight_type = value.split(':')[1];
+  let TwoWayPrice = 0;
 
   const bookingDetails = useSelector((state) => state.bookingDetails);
   const { order, loadingBooking, errorBooking } = bookingDetails;
@@ -39,6 +42,13 @@ const PaymentScreen = () => {
 
   const bookingPay = useSelector((state) => state.bookingPay);
   const { loading: loadingPay, success: successPay } = bookingPay;
+
+  if (flight_type === '1') {
+    flight_type = 'One-Way';
+  } else if (flight_type === '2') {
+    flight_type = 'Two-Way';
+    TwoWayPrice = 100;
+  }
 
   useEffect(() => {
     dispatch(listDetailsPlace(id));
@@ -76,7 +86,7 @@ const PaymentScreen = () => {
         type: place.type,
         paymentMethod: 'PayPal',
         placePrice: place.price,
-        totalPrice: place.price * qty,
+        totalPrice: place.price * qty + TwoWayPrice,
       })
     );
     update();
@@ -99,7 +109,7 @@ const PaymentScreen = () => {
       })
     );
 
-    console.log(place.numberOfSeat - qty);
+    //console.log(place.numberOfSeat - qty);
   };
 
   return (
@@ -114,7 +124,7 @@ const PaymentScreen = () => {
         <hr></hr>
         <h1>PAYMENT SCREEN</h1>
         <hr></hr>
-        <h1></h1>
+        <h1> </h1>
         {loading ? (
           <Loader />
         ) : error ? (
@@ -139,15 +149,11 @@ const PaymentScreen = () => {
                   <strong>Origin Country: </strong> {place.originCountry}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <strong>Type:</strong> {place.type}
-                </ListGroupItem>
-                <ListGroupItem>
                   <strong>Number Of Ticket's: </strong> {qty}
                 </ListGroupItem>
               </ListGroup>
             </Row>
-            <h1></h1>
-            <h1></h1>
+            <h1> </h1>
             <Row className="justify-content-md-center">
               <Card
                 border="square border border-5 border-dark"
@@ -156,7 +162,10 @@ const PaymentScreen = () => {
                 <Card.Header as="h2">How Much To Pay</Card.Header>
                 <ListGroup variant="flush">
                   <ListGroupItem>
-                    <strong>Total: </strong> ${place.price * qty}
+                    <strong>{flight_type}:</strong> ${TwoWayPrice}
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <strong>Total: </strong> ${place.price * qty + TwoWayPrice}
                   </ListGroupItem>
                   {!isPaid && (
                     <ListGroupItem>
@@ -165,14 +174,16 @@ const PaymentScreen = () => {
                         <Loader />
                       ) : (
                         <PayPalButton
-                          amount={place.price * qty}
+                          amount={place.price * qty + TwoWayPrice}
                           onSuccess={successPaymentHandler}
                         />
                       )}
                     </ListGroupItem>
                   )}
                   <ListGroupItem>
-                    {isPaid && <Message variant="success">PAID</Message>}
+                    <div className="paid">
+                      {isPaid && <Message variant="success">PAID</Message>}
+                    </div>
                   </ListGroupItem>
                 </ListGroup>
               </Card>

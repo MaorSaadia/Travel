@@ -33,3 +33,14 @@ hr {
   border: 10px solid SeaGreen;
   border-radius: 5px;
 }
+.paid {
+  text-align: center;
+  font-size: large;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: block;
+  width: 100%;
+}

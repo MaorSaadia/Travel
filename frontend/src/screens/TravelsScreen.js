@@ -18,9 +18,16 @@ import { listDetailsPlace } from '../actions/placeActions';
 const TravelsScreen = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
+  const [type, setType] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let numberOfTicket = 0;
+
+  var array1 = ['One-Way', 'Two-Way'];
+  var technologyList = [];
+  array1.forEach(function (element) {
+    technologyList.push({ label: element, value: element });
+  });
 
   useEffect(() => {
     dispatch(listDetailsPlace(id));
@@ -42,7 +49,7 @@ const TravelsScreen = () => {
     if (!userInfo) {
       window.confirm('You Must Sign In First To Book Place');
     } else {
-      navigate(`/payment/${id}`);
+      navigate(`/payment/${id}?type:${type}?qty=${qty}`);
     }
   };
 
@@ -73,7 +80,7 @@ const TravelsScreen = () => {
                 <strong>Origin Country:</strong> {place.originCountry}
               </ListGroupItem>
               <ListGroupItem>
-                <strong>Type:</strong> {place.type}
+                <strong>Flight Option:</strong> {place.flightOption}
               </ListGroupItem>
               <ListGroupItem>
                 <strong>Description:</strong> {place.description}
@@ -105,34 +112,48 @@ const TravelsScreen = () => {
 
                 <ListGroupItem>
                   <Row>
+                    <Col>How Many Ticket:</Col>
+                    <Col>
+                      <Form.Control
+                        size="sm"
+                        as="select"
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                        {[...Array(numberOfTicket).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+
+                <ListGroupItem>
+                  <Row>
+                    <Col>Choose Type:</Col>
+                    <Col>
+                      <Form.Control
+                        size="sm"
+                        as="select"
+                        onChange={(e) => setType(e.target.value)}
+                      >
+                        <option value={1}>One-Way</option>
+                        <option value={2}>Two-Way</option>
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+
+                <ListGroupItem>
+                  <Row>
                     <Col>Seat's Left:</Col>
                     <Col>
                       <strong>{place.numberOfSeat}</strong>
                     </Col>
                   </Row>
                 </ListGroupItem>
-
-                {place.numberOfSeat > 0 && (
-                  <ListGroupItem>
-                    <Row>
-                      <Col>How Many Ticket:</Col>
-                      <Col>
-                        <Form.Control
-                          size="sm"
-                          as="select"
-                          value={qty}
-                          onChange={(e) => setQty(e.target.value)}
-                        >
-                          {[...Array(numberOfTicket).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
-                      </Col>
-                    </Row>
-                  </ListGroupItem>
-                )}
 
                 <ListGroupItem>
                   <div className="d-grid gap-2">

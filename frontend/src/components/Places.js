@@ -15,10 +15,10 @@ const Places = ({ places }) => {
         <Link to={`/places/${places._id}`}>
           <Card.Title as="div"></Card.Title>
         </Link>
-        {/* <Card.Text>
+        <Card.Text>
           <strong>Flight Date: </strong>
           {places.flightDate}
-        </Card.Text> */}
+        </Card.Text>
         <Card.Footer as="h3"> ${places.price}</Card.Footer>
       </Card.Body>
     </Card>

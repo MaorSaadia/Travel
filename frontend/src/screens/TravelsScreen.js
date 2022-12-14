@@ -23,12 +23,6 @@ const TravelsScreen = () => {
   const navigate = useNavigate();
   let numberOfTicket = 0;
 
-  var array1 = ['One-Way', 'Two-Way'];
-  var technologyList = [];
-  array1.forEach(function (element) {
-    technologyList.push({ label: element, value: element });
-  });
-
   useEffect(() => {
     dispatch(listDetailsPlace(id));
   }, [dispatch, id]);

@@ -52,21 +52,6 @@ const PlaceEditScreen = () => {
   } = placeUpdate;
 
   useEffect(() => {
-    var date = new Date(flightDate);
-
-    // format the date as dd/mm/yyyy
-    var formatted_flightDate = date.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-
-    // replace the "-" characters with "/" characters
-    formatted_flightDate = formatted_flightDate.replace(/-/g, '/');
-
-    setSelectedDate(formatted_flightDate);
-    console.log(flightDate);
-
     if (successUpdate) {
       dispatch({ type: PLACE_UPDATE_RESET });
       navigate('/admin/placelist');
@@ -210,7 +195,7 @@ const PlaceEditScreen = () => {
               </FormLabel>
               <input
                 id="date"
-                type="date"
+                type="datetime-local"
                 value={flightDate}
                 min={String(mindate)}
                 onChange={(e) => setSelectedDate(e.target.value)}

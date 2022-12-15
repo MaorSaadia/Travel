@@ -8,6 +8,8 @@ import {
   FormLabel,
   FormControl,
 } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -19,16 +21,6 @@ const PlaceEditScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  let mm = today.getMonth() + 1;
-  let dd = today.getDate();
-
-  if (dd < 10) dd = '0' + dd;
-  if (mm < 10) mm = '0' + mm;
-
-  const mindate = yyyy + '-' + mm + '-' + dd;
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState('');
@@ -37,7 +29,7 @@ const PlaceEditScreen = () => {
   const [numberOfSeat, setNumberOfSeat] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [flightDate, setSelectedDate] = useState(null);
+  let [flightDate, setSelectedDate] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -66,7 +58,7 @@ const PlaceEditScreen = () => {
         setOriginCountry(place.originCountry);
         setNumberOfSeat(place.numberOfSeat);
         setDescription(place.description);
-        setSelectedDate(place.flightDate);
+        //setSelectedDate(place.flightDate);
       }
     }
   }, [dispatch, place, id, navigate, successUpdate]);
@@ -93,6 +85,21 @@ const PlaceEditScreen = () => {
   };
 
   const submitHandler = (e) => {
+    const today = flightDate;
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    let hh = today.getHours();
+    let mu = today.getMinutes();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    if (hh < 10) hh = '0' + hh;
+    if (mu < 10) mu = '0' + mu;
+
+    const formattedToday = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mu;
+    flightDate = formattedToday;
+
     e.preventDefault();
     dispatch(
       updatePlace({
@@ -193,13 +200,25 @@ const PlaceEditScreen = () => {
               <FormLabel>
                 <strong>Flight Date: &nbsp; </strong>
               </FormLabel>
-              <input
+              <DatePicker
+                selected={flightDate}
+                onChange={(date) => setSelectedDate(date)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="dd/MM/yyyy HH:mm"
+                minDate={new Date()}
+                isClearable
+                showYearDropdown
+                scrollableMonthYearDropdown
+              />
+              {/* <input
                 id="date"
                 type="datetime-local"
                 value={flightDate}
                 min={String(mindate)}
                 onChange={(e) => setSelectedDate(e.target.value)}
-              ></input>
+              ></input> */}
             </FormGroup>
             <h5> </h5>
             <h5> </h5>

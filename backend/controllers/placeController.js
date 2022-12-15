@@ -55,13 +55,18 @@ const createPlace = asyncHandler(async (req, res) => {
   let mm = today.getMonth() + 1;
   let dd = today.getDate();
 
+  let hh = today.getHours();
+  let mu = today.getMinutes();
+
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
+  if (hh < 10) hh = '0' + hh;
+  if (mu < 10) mu = '0' + mu;
 
-  const formattedToday = dd + '/' + mm + '/' + yyyy;
+  const formattedToday = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mu;
 
   const place = new Place({
-    name: 'name',
+    name: 'place Name',
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpg',

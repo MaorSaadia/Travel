@@ -23,6 +23,10 @@ const placeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    returnDate: {
+      type: String,
+      required: false,
+    },
     description: {
       type: String,
       required: true,

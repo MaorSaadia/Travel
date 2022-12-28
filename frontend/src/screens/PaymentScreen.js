@@ -105,11 +105,14 @@ const PaymentScreen = () => {
         type: place.type,
         originCountry: place.originCountry,
         description: place.description,
+        flightOption: place.flightOption,
+        flightDate: place.flightDate,
+        returnDate: place.returnDate,
         numberOfSeat: place.numberOfSeat - qty,
       })
     );
 
-    //console.log(place.numberOfSeat - qty);
+    console.log(place.numberOfSeat - qty);
   };
 
   return (

@@ -30,6 +30,7 @@ const PlaceEditScreen = () => {
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
   let [flightDate, setSelectedDate] = useState(null);
+  let [returnDate, setRetunrDate] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -85,20 +86,37 @@ const PlaceEditScreen = () => {
   };
 
   const submitHandler = (e) => {
-    const today = flightDate;
-    const yyyy = today.getFullYear();
-    let mm = today.getMonth() + 1;
-    let dd = today.getDate();
-    let hh = today.getHours();
-    let mu = today.getMinutes();
+    const flight = flightDate;
+    const fyyyy = flight.getFullYear();
+    let fmm = flight.getMonth() + 1;
+    let fdd = flight.getDate();
+    let fhh = flight.getHours();
+    let fmu = flight.getMinutes();
 
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = '0' + mm;
-    if (hh < 10) hh = '0' + hh;
-    if (mu < 10) mu = '0' + mu;
+    if (fdd < 10) fdd = '0' + fdd;
+    if (fmm < 10) fmm = '0' + fmm;
+    if (fhh < 10) fhh = '0' + fhh;
+    if (fmu < 10) fmu = '0' + fmu;
 
-    const formattedToday = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mu;
-    flightDate = formattedToday;
+    const formattedFlight =
+      fdd + '/' + fmm + '/' + fyyyy + ' ' + fhh + ':' + fmu;
+    flightDate = formattedFlight;
+
+    const returndate = returnDate;
+    const ryyyy = returndate.getFullYear();
+    let rmm = returndate.getMonth() + 1;
+    let rdd = returndate.getDate();
+    let rhh = returndate.getHours();
+    let rmu = returndate.getMinutes();
+
+    if (rdd < 10) rdd = '0' + rdd;
+    if (rmm < 10) rmm = '0' + rmm;
+    if (rhh < 10) rhh = '0' + rhh;
+    if (rmu < 10) rmu = '0' + rmu;
+
+    const formattedReturnDate =
+      rdd + '/' + rmm + '/' + ryyyy + ' ' + rhh + ':' + rmu;
+    returnDate = formattedReturnDate;
 
     e.preventDefault();
     dispatch(
@@ -112,6 +130,7 @@ const PlaceEditScreen = () => {
         description,
         numberOfSeat,
         flightDate,
+        returnDate,
       })
     );
   };
@@ -203,6 +222,25 @@ const PlaceEditScreen = () => {
               <DatePicker
                 selected={flightDate}
                 onChange={(date) => setSelectedDate(date)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="dd/MM/yyyy HH:mm"
+                minDate={new Date()}
+                isClearable
+                showYearDropdown
+                scrollableMonthYearDropdown
+              />
+            </FormGroup>
+            <h5> </h5>
+            <h5> </h5>
+            <FormGroup controlId="returnDate">
+              <FormLabel>
+                <strong>Return Date: &nbsp; </strong>
+              </FormLabel>
+              <DatePicker
+                selected={returnDate}
+                onChange={(date) => setRetunrDate(date)}
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}

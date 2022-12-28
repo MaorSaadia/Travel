@@ -18,6 +18,9 @@ const Places = ({ places }) => {
         <Card.Text>
           <strong>Flight Date: </strong>
           {places.flightDate}
+          <hr className="hr1"></hr>
+          <strong>Return Date: </strong>
+          {places.returnDate}
         </Card.Text>
         <Card.Footer as="h3"> ${places.price}</Card.Footer>
       </Card.Body>

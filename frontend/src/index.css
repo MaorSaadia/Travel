@@ -44,3 +44,6 @@ hr {
   display: block;
   width: 100%;
 }
+.hr1 {
+  border: 2px solid rgb(50, 106, 228);
+}

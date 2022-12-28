@@ -94,6 +94,7 @@ const updatePlace = asyncHandler(async (req, res) => {
     originCountry,
     numberOfSeat,
     flightDate,
+    returnDate,
   } = req.body;
 
   const place = await Place.findById(req.params.id);
@@ -107,6 +108,7 @@ const updatePlace = asyncHandler(async (req, res) => {
     place.originCountry = originCountry;
     place.numberOfSeat = numberOfSeat;
     place.flightDate = flightDate;
+    place.returnDate = returnDate;
 
     const updatedPlace = await place.save();
     res.json(updatedPlace);

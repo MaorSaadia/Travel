@@ -51,9 +51,6 @@ const bookingSchema = mongoose.Schema(
       update_time: { type: String },
       email_address: { type: String },
     },
-    paidAt: {
-      type: Date,
-    },
   },
   {
     timestamps: true,

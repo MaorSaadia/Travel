@@ -15,6 +15,7 @@ const addBookingPlace = asyncHandler(async (req, res) => {
     paymentMethod,
     placePrice,
     totalPrice,
+    paymentResult,
   } = req.body;
 
   if (numberOfTicket && numberOfTicket.length === 0) {
@@ -33,6 +34,7 @@ const addBookingPlace = asyncHandler(async (req, res) => {
       totalPrice,
       paymentMethod,
       numberOfTicket,
+      paymentResult,
     });
 
     const bookingOrder = await order.save();

@@ -87,11 +87,12 @@ const PaymentScreen = () => {
         paymentMethod: 'PayPal',
         placePrice: place.price,
         totalPrice: place.price * qty + TwoWayPrice,
+        paymentResult: paymentResult,
       })
     );
     update();
     console.log(paymentResult);
-    dispatch(payOrder(order._id, paymentResult));
+    //dispatch(payOrder(order._id, paymentResult));
   };
 
   const update = () => {
@@ -111,8 +112,6 @@ const PaymentScreen = () => {
         numberOfSeat: place.numberOfSeat - qty,
       })
     );
-
-    console.log(place.numberOfSeat - qty);
   };
 
   return (
